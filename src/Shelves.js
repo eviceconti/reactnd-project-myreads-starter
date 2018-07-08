@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom'
 class Shelves extends Component {
   render() {
     return (
+      (!this.props.books) ? (
+        <div>Loading</div>
+      ) : (
       <div className="list-books">
         <div className="list-books-title">
           <h1>MyReads</h1>
@@ -40,7 +43,7 @@ class Shelves extends Component {
                         </select>
                       </div>
                     </div>
-                    <div className="book-title">To Kill a Mockingbird</div>
+                    <div className="book-title">{this.props.books[0].title}</div>
                     <div className="book-authors">Harper Lee</div>
                   </div>
                 </li>
@@ -249,7 +252,7 @@ class Shelves extends Component {
         <Link to="/search">Add a book</Link>
       </div>
     </div>
-    )
+    ))
   }
 }
 
