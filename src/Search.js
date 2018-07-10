@@ -10,8 +10,12 @@ class Search extends Component {
   };
 
   handleInputChange(query) {
-    this.setState({ query: query.trim() });
-    if (this.state.query !== "") this.searchAPI(this.state.query);
+    this.setState({ query: query.trim() })
+    if (query !== "") {
+      this.searchAPI(query)
+    } else {
+      this.setState({ searchedBooks: [] })
+    }
   }
 
   clearQuery = () => {
@@ -20,13 +24,14 @@ class Search extends Component {
 
   searchAPI(query) {
     BooksAPI.search(query).then(searchedBooks => {
-      if (searchedBooks) {
+      if (searchedBooks.length !== 0) {
         searchedBooks.forEach(book => book.shelf = 'none')
         this.setState({ searchedBooks })
       } else {
         this.setState({ searchedBooks: [] })
       }
     });
+    //console.log(this.state.searchedBooks)
   }
 
   render() {
@@ -55,7 +60,7 @@ class Search extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {(!this.state.searchedBooks) ? (<div />) : (
+            {(this.state.searchedBooks.length === 0) ? (<div />) : (
               <Shelf
               books={this.state.searchedBooks}
               shelf='none'
