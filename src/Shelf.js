@@ -13,7 +13,7 @@ const Shelf = (props) =>  {
     props.books
       .filter(book => book.shelf === props.shelf)
         .map(b => (
-          <li key={b.title}>
+          <li key={b.id}>
             <div className="book">
               <div className="book-top">
                 <div
@@ -43,10 +43,10 @@ const Shelf = (props) =>  {
                 </div>
               </div>
               <div className="book-title">{b.title}</div>
-              {//map authors to show all authors
-                b.authors.map(author => (
+              {/*map authors to show all authors. Check if there is an author before*/}
+              {b.authors ? (b.authors.map(author => (
                   <div className="book-authors" key={author}>{author}</div>
-                ))}
+                ))) : (<div />) }
             </div>
           </li>
         ))
