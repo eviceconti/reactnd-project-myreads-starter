@@ -1,7 +1,14 @@
 import React from 'react'
 
 const Shelf = (props) =>  {
-  
+  let options = [
+    {value: 'move', text: 'Move to...', disabled: 'disabled'},
+    {value: 'currentlyReading', text: 'Currently Reading', disabled: ''},
+    {value: 'wantToRead', text: 'Want To Read', disabled: ''},
+    {value: 'read', text: 'Read', disabled: ''},
+    {value: 'none', text: 'None', disabled: ''}
+  ]
+
   return (
     props.books
       .filter(book => book.shelf === props.shelf)
@@ -20,16 +27,18 @@ const Shelf = (props) =>  {
                   }}
                 />
                 <div className="book-shelf-changer">
-                  <select>
-                    <option value="move" disabled>
-                      Move to...
-                    </option>
-                    <option value="currentlyReading">
-                      Currently Reading
-                    </option>
-                    <option value="wantToRead">Want to Read</option>
-                    <option value="read">Read</option>
-                    <option value="none">None</option>
+                  <select 
+                    defaultValue={b.shelf}
+                    onChange={(e) => props.updateShelf(e.target.value, b.id)}
+                  >
+                    {options.map(option => (
+                      <option 
+                        key={option.value}
+                        value={option.value}
+                        disabled={option.disabled}
+                      >
+                      {option.text}
+                    </option>))}
                   </select>
                 </div>
               </div>
