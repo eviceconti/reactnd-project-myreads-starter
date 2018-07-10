@@ -1,25 +1,32 @@
-import React, { Component } from "react"
-import { Link } from "react-router-dom"
-import * as BooksAPI from './BooksAPI'
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import * as BooksAPI from "./BooksAPI";
+import Shelf from './Shelf'
 
 class Search extends Component {
   state = {
-    query: ''
-  }
+    query: "",
+    searchedBooks: []
+  };
 
   handleInputChange(query) {
-    this.setState({ query: query.trim() })
-    this.searchAPI(this.state.query)
-  }
-  
-  clearQuery = () => {
-    this.setState({ query: '' })
+    this.setState({ query: query.trim() });
+    if (this.state.query !== "") this.searchAPI(this.state.query);
   }
 
+  clearQuery = () => {
+    this.setState({ query: "" });
+  };
+
   searchAPI(query) {
-    BooksAPI.search(query).then(response => {
-      console.log(response)
-    })
+    BooksAPI.search(query).then(searchedBooks => {
+      if (searchedBooks) {
+        searchedBooks.forEach(book => book.shelf = 'none')
+        this.setState({ searchedBooks })
+      } else {
+        this.setState({ searchedBooks: [] })
+      }
+    });
   }
 
   render() {
@@ -38,18 +45,27 @@ class Search extends Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-            <input 
-              type="text" 
+            <input
+              type="text"
               placeholder="Search by title or author"
               value={this.state.query}
-              onChange={(e) => this.handleInputChange(e.target.value)} />
+              onChange={e => this.handleInputChange(e.target.value)}
+            />
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid" />
+          <ol className="books-grid">
+            {(!this.state.searchedBooks) ? (<div />) : (
+              <Shelf
+              books={this.state.searchedBooks}
+              shelf='none'
+              updateShelf={this.props.updateShelf}
+              />
+              )}
+          </ol>
         </div>
       </div>
-    )
+    );
   }
 }
 
