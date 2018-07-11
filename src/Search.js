@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import * as BooksAPI from './BooksAPI'
-import Shelf from './Shelf'
+import React, { Component } from "react"
+import { Link } from "react-router-dom"
+import * as BooksAPI from "./BooksAPI"
+import Shelf from "./Shelf"
 
 class Search extends Component {
   state = {
@@ -18,19 +18,21 @@ class Search extends Component {
     }
   }
 
-  clearQuery = () => {
-    this.setState({ query: "" });
-  };
-
   searchAPI(query) {
     BooksAPI.search(query).then(searchedBooks => {
       if (searchedBooks.length !== 0) {
         searchedBooks.forEach(book => book.shelf = 'none')
+        searchedBooks.forEach(book => (
+          this.props.books.map(b => {
+            if (b.id === book.id) 
+              book.shelf = b.shelf
+          })
+        ))
         this.setState({ searchedBooks })
       } else {
         this.setState({ searchedBooks: [] })
       }
-    });
+    })
     //console.log(this.state.searchedBooks)
   }
 
@@ -60,13 +62,15 @@ class Search extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {(this.state.searchedBooks.length === 0) ? (<div />) : (
+            {this.state.searchedBooks.length === 0 ? (
+              <div />
+            ) : (
               <Shelf
-              books={this.state.searchedBooks}
-              shelf='none'
-              updateShelf={this.props.updateShelf}
+                books={this.state.searchedBooks}
+                shelf="none"
+                updateShelf={this.props.updateShelf}
               />
-              )}
+            )}
           </ol>
         </div>
       </div>
@@ -74,4 +78,4 @@ class Search extends Component {
   }
 }
 
-export default Search
+export default Search;
