@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import * as BooksAPI from "./BooksAPI";
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import * as BooksAPI from './BooksAPI'
 import Shelf from './Shelf'
 
 class Search extends Component {
@@ -10,9 +10,9 @@ class Search extends Component {
   };
 
   handleInputChange(query) {
-    this.setState({ query: query.trim() })
+    this.setState({ query })
     if (query !== "") {
-      this.searchAPI(query)
+      this.searchAPI(query.trim())
     } else {
       this.setState({ searchedBooks: [] })
     }

@@ -16,7 +16,8 @@ const Shelf = (props) =>  {
           <li key={b.id}>
             <div className="book">
               <div className="book-top">
-                <div
+                {b.imageLinks ? (
+                  <div
                   className="book-cover"
                   style={{
                     width: 128,
@@ -26,6 +27,16 @@ const Shelf = (props) =>  {
                     })`
                   }}
                 />
+                ) : (
+                  <div
+                    className="book-cover book-cover-title"
+                    style={{
+                      width: 128,
+                      height: 193,
+                    }}
+                  >{b.title}</div>
+                )}
+                
                 <div className="book-shelf-changer">
                   <select 
                     defaultValue={b.shelf}
