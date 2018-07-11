@@ -37,7 +37,7 @@ class Shelves extends Component {
                 <div className="bookshelf-books">
                   <ol className="books-grid">
                     <Shelf 
-                      books={this.props.books} shelf={shelf.shelf}
+                      books={this.props.books.filter(book => book.shelf === shelf.shelf)} shelf={shelf.shelf}
                       updateShelf={this.props.updateShelf} />
                   </ol>
                 </div>

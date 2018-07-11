@@ -10,9 +10,7 @@ const Shelf = (props) =>  {
   ]
 
   return (
-    props.books
-      .filter(book => book.shelf === props.shelf)
-        .map(b => (
+    props.books.map(b => (
           <li key={b.id}>
             <div className="book">
               <div className="book-top">
