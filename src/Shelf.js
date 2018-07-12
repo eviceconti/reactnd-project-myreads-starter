@@ -53,9 +53,9 @@ const Shelf = (props) =>  {
               </div>
               <div className="book-title">{b.title}</div>
               {/*map authors to show all authors. Check if there is an author before*/}
-              {b.authors ? (b.authors.map(author => (
+              {b.authors && (b.authors.map(author => (
                   <div className="book-authors" key={author}>{author}</div>
-                ))) : (<div />) }
+                )))}
             </div>
           </li>
         ))

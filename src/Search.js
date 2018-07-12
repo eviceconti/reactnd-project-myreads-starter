@@ -62,9 +62,7 @@ class Search extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {this.state.searchedBooks.length === 0 ? (
-              <div />
-            ) : (
+            {this.state.searchedBooks && (
               <Shelf
                 books={this.state.searchedBooks}
                 shelf="none"
