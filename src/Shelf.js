@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Shelf = (props) =>  {
+  //options array used to render the available options from the select input
   let options = [
     {value: 'move', text: 'Move to...', disabled: 'disabled'},
     {value: 'currentlyReading', text: 'Currently Reading', disabled: ''},
@@ -14,6 +15,7 @@ const Shelf = (props) =>  {
           <li key={b.id}>
             <div className="book">
               <div className="book-top">
+                {/*Check if there is a thumbnail. If not, show the title*/}
                 {b.imageLinks ? (
                   <div
                   className="book-cover"
@@ -38,7 +40,7 @@ const Shelf = (props) =>  {
                 <div className="book-shelf-changer">
                   <select 
                     defaultValue={b.shelf}
-                    onChange={(e) => props.updateShelf(e.target.value, b.id)}
+                    onChange={(e) => props.updateShelf(e.target.value, b.id) /*invoke the method received via props from App -> Shelves*/}
                   >
                     {options.map(option => (
                       <option 
@@ -52,7 +54,7 @@ const Shelf = (props) =>  {
                 </div>
               </div>
               <div className="book-title">{b.title}</div>
-              {/*map authors to show all authors. Check if there is an author before*/}
+              {/*Check if there is at least 1 author. Yes -> map authors to show all.*/}
               {b.authors && (b.authors.map(author => (
                   <div className="book-authors" key={author}>{author}</div>
                 )))}

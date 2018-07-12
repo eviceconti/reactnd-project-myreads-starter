@@ -4,11 +4,20 @@ import * as BooksAPI from "./BooksAPI"
 import Shelf from "./Shelf"
 
 class Search extends Component {
+  /* 
+  query: set the state of the input (Controlled Field)
+  searchedBooks: the return from the .search() from API
+  */
   state = {
     query: "",
     searchedBooks: []
   };
 
+  /*
+  Invoked on each change of the input Search
+  Update the state and if the query is not an empty string calls the searchAPI
+  If the query is empty, update the searchedBooks with an empty array
+  */
   handleInputChange(query) {
     this.setState({ query })
     if (query.trim() !== "") {
@@ -18,6 +27,13 @@ class Search extends Component {
     }
   }
 
+  /*
+  searchAPI
+  set the searchedBooks to an empty array if the response from API is an empty array (incorrect search term)
+  If get an array with books:
+    - set the correct shelf for each book (based on books already in the shelves of main page)
+    - update the state with the books received
+  */
   searchAPI(query) {
     BooksAPI.search(query).then(searchedBooks => {
       console.log(searchedBooks)
@@ -39,6 +55,7 @@ class Search extends Component {
     return (
       <div className="search-books">
         <div className="search-books-bar">
+          {/*Return to main page using react-router*/}
           <Link to="/" className="close-search">
             Close
           </Link>
@@ -53,7 +70,7 @@ class Search extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {this.state.searchedBooks && (
+            {this.state.searchedBooks && ( //when the books are available, render them using the Shelf component
               <Shelf
                 books={this.state.searchedBooks}
                 shelf="none"

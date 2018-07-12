@@ -12,6 +12,10 @@ class BooksApp extends React.Component {
     }
 
   render() {
+    /*
+    Using the react-router to render the main page Shelves or the Search page
+    Passing the books already in shelves for both components, and also the updateShelf
+    */
     return (
       <div className="app">
         <Route exact path="/" render={() => (
@@ -30,6 +34,7 @@ class BooksApp extends React.Component {
     )
   }
 
+  //Using the API to fetch books from the Server
   fetchBooks() {
     BooksAPI.getAll().then((books) => {
       this.setState({ books })
@@ -37,6 +42,10 @@ class BooksApp extends React.Component {
     })
   }
 
+  /*
+  Passing the method via props to Shelves -> Shelf and also to Search Components
+  This method send via the API the new shelf selected by the user to the server and after that fetch the books from server again
+  */
   updateShelf = (shelf, bookId) => {
     BooksAPI.update({id: bookId}, shelf).then( () => {
       this.fetchBooks()
